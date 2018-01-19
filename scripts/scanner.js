@@ -62,36 +62,9 @@
         lockLayer.innerHTML = '.......'
 
         addCSSRule('.QRScanner-container',
-            `position: fixed;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            box-sizing: border-box;
-            width: 260px;
-            height: 220px;
-            z-index: 999999999;
-            margin: auto;
-            padding: 10px;
-            display: block;
-            background-color: ${options.bgColor || '#f0f0f0'};
-            box-shadow: ${options.shadow || '0px 0px 10px #000'}
-        `);
+            "position: fixed; left: 0; top: 0; right: 0; bottom: 0; box-sizing: border-box; width: 260px; height: 220px; z-index: 999999999; margin: auto; padding: 10px; display: block; background-color: "+(options.bgColor || '#f0f0f0')+"; box-shadow: "+(options.shadow || '0px 0px 10px #000'));
         addCSSRule('.QRScanner-lock-layer',
-            `position: fixed;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            box-sizing: border-box;
-            width: 100%;
-            height: 100%;
-            z-index: 999999995;
-            margin: auto;
-            display: block;
-            background-color: #000;
-            opacity: .3;
-        `);
+            "position: fixed; left: 0; top: 0; right: 0; bottom: 0; box-sizing: border-box; width: 100%; height: 100%; z-index: 999999995; margin: auto; display: block; background-color: #000; opacity: .3;");
 
         (options.parent || document.body).appendChild(container);
         (options.lockLayerParent || document.body).appendChild(lockLayer);
@@ -118,7 +91,8 @@
             }
             window.clearInterval(WebQR.timer)
             window.clearTimeout(WebQR.timeOut)
-            WebQR.stream.getTracks()[0].stop()
+            if(typeof WebQR.stream != 'undefined')
+                WebQR.stream.getTracks()[0].stop()
             WebQR.container.style.display = 'none'
             WebQR.lockLayer.style.display = 'none'
             WebQR.ctx.clearRect(0, 0, 240, 200)
@@ -149,7 +123,7 @@
             }
 
             initiated = true
-            document.body.addEventListener('keyup', event => {
+            document.body.addEventListener('keyup', function(event) {
                 if (event.keyCode === 27) {
                     close()
                 }
@@ -159,11 +133,12 @@
             WebQR.lockLayer.style.display = 'block'
         }
 
-        WebQR.lockLayer.onclick = event => {close()}
+        WebQR.lockLayer.onclick = function(event) {close()}
 
         if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-                WebQR.video.src = window.URL.createObjectURL(stream);
+            navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(function(stream) {
+                WebQR.video.srcObject = stream;
+                //WebQR.video.src = window.URL.createObjectURL(stream);
                 WebQR.video.play();
                 WebQR.stream = stream
                 WebQR.timer = window.setInterval(function () {
@@ -179,6 +154,8 @@
                     options.onTimeout()
                     close(false)
                 }, options.timeout || 20000)
+            }).catch(function(reason) {
+                options.onError()
             });
         }
     }

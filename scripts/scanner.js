@@ -7,7 +7,7 @@
     }
 }(this, function QRScanner () {
 
-    let MODULE = {}
+    var MODULE = {}
 
     function QRCodeDecoder (scope) {
         if (!scope.qrcode) {
@@ -18,8 +18,8 @@
         }
     }
 
-    let initiated = false;
-    let WebQR = {}
+    var initiated = false;
+    var WebQR = {}
 
     function addCSSRule(selector, rules, index, sheet) {
         index = index || 0;

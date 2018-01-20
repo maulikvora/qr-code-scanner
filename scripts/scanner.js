@@ -52,11 +52,11 @@
     function createGlobalComponent (options) {
 
         options = options || {}
-        let container = document.createElement('div')
-        let lockLayer = document.createElement('div')
+        var container = document.createElement('div')
+        var lockLayer = document.createElement('div')
         lockLayer.className = 'QRScanner-lock-layer ' + options.lockLayerClassName
         container.className = 'QRScanner-container ' + options.className
-        let innerHTML = '<canvas id="QRScanner-canvasEl" width="240" height="200"></canvas>'
+        var innerHTML = '<canvas id="QRScanner-canvasEl" width="240" height="200"></canvas>'
         innerHTML += '<video id="QRScanner-videoEl" style="display: none;" width="200" height="200"></video>'
         container.innerHTML = innerHTML
         lockLayer.innerHTML = '.......'
@@ -73,7 +73,7 @@
     }
 
     MODULE.initiate = function (opts) {
-        let options = opts || {}
+        var options = opts || {}
         options.onResult = opts.onResult || function (result) { console.info('RESULT ::: ', result); },
         options.onError = opts.onError || function (err) { console.error('ERR :::: ', err); },
         options.onTimeout = opts.onTimeout ||  function () { console.warn('TIMEDOUT'); }

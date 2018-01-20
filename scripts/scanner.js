@@ -136,7 +136,7 @@
         WebQR.lockLayer.onclick = function(event) {close()}
 
         if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(function(stream) {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false }).then(function(stream) {
                 WebQR.video.srcObject = stream;
                 //WebQR.video.src = window.URL.createObjectURL(stream);
                 WebQR.video.play();

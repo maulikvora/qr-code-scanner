@@ -57,7 +57,7 @@
         lockLayer.className = 'QRScanner-lock-layer ' + options.lockLayerClassName
         container.className = 'QRScanner-container ' + options.className
         var innerHTML = '<canvas id="QRScanner-canvasEl" width="240" height="200"></canvas>'
-        innerHTML += '<video id="QRScanner-videoEl" style="display: none;" width="200" height="200"></video>'
+        innerHTML += '<video id="QRScanner-videoEl" playsinline autoplay muuted style="display: none;" width="200" height="200"></video>'
         container.innerHTML = innerHTML
         lockLayer.innerHTML = '.......'
 
